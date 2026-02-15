@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import useTheme from './hooks/useTheme'
 import Header from './components/Header'
 import MainLayout from './components/MainLayout'
 import Footer from './components/Footer'
 import './App.css'
 
 function App() {
-  const [products, setProducts] = useState([]);
+  const { mode } = useTheme()
+  const [products, setProducts] = useState([])
 
   const fetchProducts = async (filter) => {
     const newProducts = await fetch('https://fakestoreapi.com/products')
@@ -22,15 +24,15 @@ function App() {
   }
 
   useEffect(() => {
-    fetchProducts(null);
-  }, []);
+    fetchProducts(null)
+  }, [])
 
   return (
-    <>
+    <div className={`eco-app ${mode}`}>
       <Header fetchProducts={fetchProducts} />
       <MainLayout products={products} />
       <Footer />
-    </>
+    </div>
   )
 }
 
