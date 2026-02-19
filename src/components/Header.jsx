@@ -1,10 +1,11 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
 import useCart from "../hooks/useCart";
 
 const Header = ({ fetchProducts }) => {
 	const { mode, setMode } = useTheme()
-	const { cart, setShowCart } = useCart()
+	const { cart } = useCart()
 
 	const inputRef = useRef(null)
 
@@ -19,22 +20,29 @@ const Header = ({ fetchProducts }) => {
 			<header className="eco-header">
 				<nav className="eco-nav">
 					<div className="eco-nav-left">
-						<span className="eco-text" onClick={() => setShowCart(false)}>EcoShop</span>
+						<Link to="/">
+							<span className="eco-text">EcoShop</span>
+						</Link>
 						<ul className="eco-menu">
-							<li className="eco-menu-item">Categorías</li>
-							<li className="eco-menu-item">Ofertas</li>
-							<li className="eco-menu-item">Contacto</li>
+							<Link to="/login">
+								<li className="eco-menu-item">Iniciar sesión</li>
+							</Link>
+							<Link to="/cart">
+								<li className="eco-menu-item">Carrito</li>
+							</Link>
 						</ul>
 					</div>
 					<div className="eco-nav-right">
 						<input type="text" className="eco-nav-search" placeholder="Buscar productos..." ref={inputRef} onChange={() => handleFilter(inputRef.current.value)} />
 						<div className="eco-nav-icons">
-							<div className="eco-cart" onClick={() => setShowCart(true)}>
-								{cart.length > 0 && <span className="eco-cart-icon">{totalProducts}</span>}
-								<span className="material-symbols-outlined">
-									shopping_cart
-								</span>
-							</div>
+							<Link to="/cart">
+								<div className="eco-cart">
+									{cart.length > 0 && <span className="eco-cart-icon">{totalProducts}</span>}
+									<span className="material-symbols-outlined">
+										shopping_cart
+									</span>
+								</div>
+							</Link>
 							<div className="eco-mode" onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}>
 								<span className="material-symbols-outlined">
 									{mode === 'dark' ? 'dark_mode' : 'light_mode'}

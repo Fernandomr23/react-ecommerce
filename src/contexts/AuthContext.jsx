@@ -13,15 +13,18 @@ export const AuthProvider = ({ children }) => {
 			setUsername(username)
 		}
 	}, [])
-	
+
 	const login = (localUser) => {
 		localStorage.setItem('userData', JSON.stringify(localUser));
 		setUsername(localUser.username);
 	}
 
-	const logout = () => {
+	const logout = (navigate) => {
 		localStorage.removeItem('userData')
 		setUsername(null)
+		setTimeout(() => {
+			if (navigate) navigate('/', { replace: true })
+		}, 0)
 	}
 
 	return (

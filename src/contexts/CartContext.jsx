@@ -21,8 +21,13 @@ export const CartProvider = ({ children }) => {
 		}
 	}
 
+	const handleConfirmPurchase = () => {
+		alert('¡Compra confirmada! Se redirigirá a la pasarela de pago.');
+		setCart([]); 
+	}
+
 	return (
-		<CartContext.Provider value={{ cart, handleAddToCart, showCart, setShowCart }}>
+		<CartContext.Provider value={{ cart, setCart, showCart, setShowCart, handleAddToCart, handleConfirmPurchase }}>
 			{children}
 		</CartContext.Provider>
 	)

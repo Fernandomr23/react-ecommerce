@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
-import useTheme from './hooks/useTheme'
-import Header from './components/Header'
-import MainLayout from './components/MainLayout'
-import Footer from './components/Footer'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
+import Layout from './views/Layout'
+import Home from './views/Home'
+import ProductDetails from './views/ProductDetails'
+import Login from './views/Login'
+import CartPage from './views/CartPage'
+import NotFound from './views/NotFound'
 import './App.css'
 
 function App() {
-  const { mode } = useTheme()
   const [products, setProducts] = useState([])
 
   const fetchProducts = async (filter) => {
@@ -28,11 +31,23 @@ function App() {
   }, [])
 
   return (
-    <div className={`eco-app ${mode}`}>
-      <Header fetchProducts={fetchProducts} />
-      <MainLayout products={products} />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Layout fetchProducts={fetchProducts}>
+        <Routes>
+          <Route path="/" element={<Home products={products} />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/product/:id"
+            element={<ProtectedRoute><ProductDetails products={products} /></ProtectedRoute>}
+          />
+          <Route
+            path="/cart"
+            element={<ProtectedRoute><CartPage /></ProtectedRoute>}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   )
 }
 
