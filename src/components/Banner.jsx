@@ -1,7 +1,9 @@
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
 	const { username, logout } = useAuth()
+	const navigate = useNavigate()
 
 	return (
 		<div className="eco-banner">
@@ -11,7 +13,7 @@ const Banner = () => {
 						¡Bienvenido de nuevo, {username}!
 					</span>
 					<p className="eco-banner-text">Disfruta de tus productos favoritos con descuentos exclusivos.</p>
-					<button className="eco-login-button" onClick={logout}>
+					<button className="eco-login-button" onClick={() => logout(navigate)}>
 						Cerrar sesión
 					</button>
 				</div>

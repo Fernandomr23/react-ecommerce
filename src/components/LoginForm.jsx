@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
 	const { login } = useAuth()
+	const navigate = useNavigate()
+	const location = useLocation()
 
 	const [localUser, setLocalUser] = useState({ username: '', email: '' })
 	const [error, setError] = useState('')
@@ -21,6 +24,8 @@ const Login = () => {
 			username: '',
 			email: ''
 		})
+		const from = location.state?.from?.pathname || '/';
+		navigate(from, { replace: true });
 	}
 
 	return (
