@@ -18,11 +18,17 @@ const Login = () => {
 			return;
 		}
 
+		if (localUser.email.includes('@admin')) {
+			localUser.role = 'admin'
+		} else {
+			localUser.role = 'user'
+		}
+
 		login(localUser)
 		setError('')
 		setLocalUser({
 			username: '',
-			email: ''
+			email: '',
 		})
 		const from = location.state?.from?.pathname || '/';
 		navigate(from, { replace: true });
