@@ -2,16 +2,14 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
 import useCart from "../hooks/useCart";
+import useProducts from "../hooks/useProducts";
 
-const Header = ({ fetchProducts }) => {
+const Header = () => {
+	const { fetchProducts } = useProducts()
 	const { mode, setMode } = useTheme()
 	const { cart } = useCart()
 
 	const inputRef = useRef(null)
-
-	const handleFilter = (input) => {
-		fetchProducts(input)
-	}
 
 	const totalProducts = cart.reduce((total, product) => total + product.quantity, 0)
 
@@ -33,7 +31,7 @@ const Header = ({ fetchProducts }) => {
 						</ul>
 					</div>
 					<div className="eco-nav-right">
-						<input type="text" className="eco-nav-search" placeholder="Buscar productos..." ref={inputRef} onChange={() => handleFilter(inputRef.current.value)} />
+						<input type="text" className="eco-nav-search" placeholder="Buscar productos..." ref={inputRef} onChange={() => fetchProducts(inputRef.current.value)} />
 						<div className="eco-nav-icons">
 							<Link to="/cart">
 								<div className="eco-cart">
